@@ -15,11 +15,13 @@ async def on_ready():
     print(discord.__version__)  # discord.pyのバージョン
     print('----------------')
     print('Hello World,投票botプログラム、起動しました')
-    await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='投票受付'))
+    await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='投票受付'))#状態をidle　投票受付をプレイ中
 
 @client.event
 async def on_message(message):
     if message.author.bot:  # ボットを弾く。
         return 
+
+
 
 client.run(TOKEN)
