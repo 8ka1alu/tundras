@@ -10,7 +10,7 @@ client = discord.Client()
 #起動メッセージ
 @client.event
 async def on_ready():
-    print(投票bot君)  # ボットの名前
+    print(client.user.name)  # ボットの名前
     print(client.user.id)  # ボットのID
     print(discord.__version__)  # discord.pyのバージョン
     print('----------------')
