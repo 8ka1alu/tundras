@@ -22,6 +22,9 @@ async def on_message(message):
     if message.author.bot:  # ボットを弾く。
         return 
 
+#投票開始
+    if message.content == '投票開始'
+
 
 
 client.run(TOKEN)
