@@ -24,6 +24,7 @@ async def on_message(message):
 
 #投票開始
     if message.content == '投票開始':
+        match = re.search()
 
 
 
