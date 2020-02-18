@@ -10,8 +10,8 @@ client = discord.Client()
 #起動メッセージ
 @client.event
 async def on_ready():
-    print(client.user.name)  # ボットの名前
-    print(client.user.id)  # ボットのID
+    print(投票bot君)  # ボットの名前
+    print(CLIENT.ID:678196297202663425)  # ボットのID
     print(discord.__version__)  # discord.pyのバージョン
     print('----------------')
     print('Hello World,投票botプログラム、起動しました')
