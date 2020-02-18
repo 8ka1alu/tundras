@@ -23,7 +23,7 @@ async def on_message(message):
         return 
 
 #投票開始
-    if message.content == '投票開始'
+    if message.content == '投票開始':
 
 
 
