@@ -23,11 +23,11 @@ async def on_message(message):
         return 
 
 #投票開始
-    if message.content == '投票開始':
-        await
-        command="-vote "#スペースまで含めること
-            if message.content.startswith(command):
-               targets=message.content[len(command):].split()
+    if "投票" in message.content:
+        if "選択肢1" in message.content:
+            print("投票加算処理")
+        if "選択肢2" in message.content:
+            print("投票加算処理")
 
 
 
