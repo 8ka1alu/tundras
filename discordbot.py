@@ -58,7 +58,4 @@ async def on_raw_reaction_add(payload):
                 if user.id == u.id:
                     await message.remove_reaction(r.emoji, user)
 
-
-
-
 client.run(TOKEN)
