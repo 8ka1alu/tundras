@@ -20,7 +20,7 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-    await message.channel.send(f"{member}さんいらっしゃい！")
+    await channel.send(f"{member}さんいらっしゃい！")
 
 @client.event
 async def on_message(message):
