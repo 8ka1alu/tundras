@@ -28,7 +28,7 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-    member_count = len(set(client.get_all_members()))
+    member_count = len(set(client.get_all_members if not member.bot()))
     if member.guild.id == sayas:
         await client.get_channel(saya_wc).send(f"<@{member.id}>さんいらっしゃい！")
     elif member.guild.id == tests:
