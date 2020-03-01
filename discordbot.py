@@ -22,7 +22,10 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-    await channel.send(f"{member}さんいらっしゃい！")
+    guild = message.guild
+    member_count = sum(1 for member in guild.members if not member.bot) 
+    bot_count = sum(1 for member in guild.members if member.bot)     
+    await client.channel.send(f"{message.author.mention}さんいらっしゃい！\n```現在メンバー数" + member_count + "```")
 
 @client.event
 async def on_message(message):
