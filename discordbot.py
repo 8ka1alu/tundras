@@ -7,6 +7,12 @@ import random
 #トークン
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
+#サーバー・チャンネルID
+sayas = 654239524016357377
+saya_wc = 654239524016357380
+tests = 683613604645175308
+test_wc = 683613604645175311
+
 # 接続に必要なオブジェクトを生成
 client = discord.Client()
 
@@ -25,7 +31,10 @@ async def on_member_join(member):
     guild = message.guild
     member_count = sum(1 for member in guild.members if not member.bot) 
     bot_count = sum(1 for member in guild.members if member.bot)     
-    await client.channel.send(f"{message.author.mention}さんいらっしゃい！\n```現在メンバー数" + member_count + "```")
+    if member.guild.id == sayas:
+        await client.get_channel(saya_wc).send(f"{message.author.mention}さんいらっしゃい！\n```現在メンバー数" + member_count + "```")
+    elif member.guild.id == tests:
+        await client.get_channel(test_wc).send(f"{message.author.mention}さんいらっしゃい！\n```現在メンバー数" + member_count + "```")
 
 @client.event
 async def on_message(message):
