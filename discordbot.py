@@ -29,9 +29,9 @@ async def on_ready():
 @client.event
 async def on_member_join(member):
     if member.guild.id == sayas:
-        await client.get_channel(saya_wc).send(f"{message.author.mention}さんいらっしゃい！")
+        await client.get_channel(saya_wc).send(f"<@{member.id}>さんいらっしゃい！")
     elif member.guild.id == tests:
-        await client.get_channel(test_wc).send(f"{message.author.mention}さんいらっしゃい！")
+        await client.get_channel(test_wc).send(f"<@{member.id}>さんいらっしゃい！")
 
 @client.event
 async def on_message(message):
