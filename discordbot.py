@@ -28,7 +28,7 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-    guild = client.guild 
+    guild = client.guilds 
     member_count = sum(1 for member in guild.members if not member.bot)
     bot_count = sum(1 for member in guild.members if member.bot) 
     if member.guild.id == sayas:
