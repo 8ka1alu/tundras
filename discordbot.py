@@ -38,4 +38,4 @@ async def on_message(message):
             if got_message is not None:
                 await message.channel.send(embed=open_message(got_message))
  
-client.run(token)
+client.run(TOKEN)
