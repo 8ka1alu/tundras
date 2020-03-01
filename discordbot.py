@@ -1,6 +1,7 @@
 import discord 
 import os
 import asyncio
+import re
 
 #トークン
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
