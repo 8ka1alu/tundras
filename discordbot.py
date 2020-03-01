@@ -39,8 +39,7 @@ async def on_message(message):
             if got_message is not None:
                 await message.channel.send(embed=open_message(got_message))
 
-@client.event
-async def open_message(message):
+def open_message(message):
     """
     メッセージを展開し、作成した埋め込みに各情報を添付し返す関数
     Args:
