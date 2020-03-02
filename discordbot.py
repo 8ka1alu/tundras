@@ -78,7 +78,7 @@ async def on_member_remove(member):
 
 @client.event
 async def on_message(message):
-    if message.conent = ("i)sinfo"):
+    if message.conent == ("i)sinfo"):
         guild = message.guild
         role = next(c for c in guild.roles if c.name == '@everyone')
         t_locked = 0
