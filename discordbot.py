@@ -181,17 +181,17 @@ async def on_message(message):
         # さいころの目の総和の内訳を表示する
         await message.channel.send(dice)
 
-    if message.content == 'i)restart': 
+    if message.content == 'irestart': 
         if message.author.id == great_owner_id:
             await message.channel.send('5秒後に再起動します')
-            await client.change_presence(status=discord.Status.dnd,activity=discord.Game(name='インスニウム'))
+            await client.change_presence(status=discord.Status.dnd,activity=discord.Game(name='再起動待機'))
             await asyncio.sleep(5)
             await client.logout()  
             os.execv(sys.executable,[sys.executable, os.path.join(sys.path[0], __file__)] + sys.argv[1:])  
         if not message.author.id == great_owner_id:
             await message.channel.send('貴方にこのコマンドの使用権限はありません')   
 
-    if message.content == 'i)clear': 
+    if message.content == 'iclear': 
         if message.author.id == great_owner_id:
             await message.channel.purge()  
         if not message.author.id == great_owner_id:
