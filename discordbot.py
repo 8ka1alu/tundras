@@ -182,9 +182,9 @@ async def on_message(message):
 
     if message.content == 'i)restart': 
         if message.author.id == great_owner_id:
-            await message.channel.send('再起動します')
+            await message.channel.send('5秒後に再起動します')
             await client.change_presence(status=discord.Status.dnd,activity=discord.Game(name='インスニウム'))
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(5)
             await client.logout()  
             os.execv(sys.executable,[sys.executable, os.path.join(sys.path[0], __file__)] + sys.argv[1:])  
         if not message.author.id == great_owner_id:
