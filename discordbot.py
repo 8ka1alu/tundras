@@ -24,9 +24,12 @@ great_owner_id = 459936557432963103
 
 @client.event
 async def on_ready():
+    guild = member.guild 
+    member_count = sum(1 for member in guild.members if not member.bot)
+    bot_count = sum(1 for member in guild.members if member.bot) 
     embed = discord.Embed(
         title = "起動ログ",
-        description = "起動しました",
+        description = f"起動しました\nメンバー数：{str(member_count)}人\nBot数：{str(bot_count)}個",
         color = random.choice((0,0x1abc9c,0x11806a,0x2ecc71,0x1f8b4c,0x3498db,0x206694,0x9b59b6,0x71368a,0xe91e63,0xad1457,0xf1c40f,0xc27c0e,0xe67e22,0x95a5a6,0x607d8b,0x979c9f,0x546e7a,0x7289da,0x99aab5))
     )
     embed.timestamp = datetime.now(JST)
