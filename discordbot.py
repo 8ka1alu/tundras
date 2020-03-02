@@ -60,7 +60,8 @@ async def on_member_join(member):
         description = random.choice(msg) + f"\n現在のメンバーは**{len(member.guild.members)}**人です。",
         color = discord.Color.green()
     )
-    embed.timestamp = datetime.now(JST)  
+    embed.timestamp = datetime.now(JST) 
+    await logch.send(embed=embed) 
     
 @client.event
 async def on_member_remove(member):
@@ -83,6 +84,7 @@ async def on_member_remove(member):
         color = discord.Color.green()
     )
     embed.timestamp = datetime.now(JST)  
+    await logch.send(embed=embed) 
 
 @client.event
 async def on_message(message):
