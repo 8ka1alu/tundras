@@ -18,7 +18,7 @@ TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
 JST = timezone(timedelta(hours=+9), 'JST')
 
-onch_id = 683613604645175311 #Bot起動ログチャンネルのID
+onch_id = 683876343544414241 #Bot起動ログチャンネルのID
 logch_id = 654239524016357380 #参加退出ログチャンネルのID
 great_owner_id = 459936557432963103
 
