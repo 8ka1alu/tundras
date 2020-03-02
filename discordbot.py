@@ -20,6 +20,7 @@ JST = timezone(timedelta(hours=+9), 'JST')
 
 onch_id = 683613604645175311 #Bot起動ログチャンネルのID
 logch_id = 654239524016357380 #参加退出ログチャンネルのID
+great_owner_id = 459936557432963103
 
 @client.event
 async def on_ready():
@@ -149,19 +150,6 @@ async def on_message(message):
         embed.add_field(name="‣二段階認証", value=f"**{mfamsg}**", inline=False)
         embed.set_footer(text = datetime.now(JST))
         await message.channel.send(embed=embed)
-
-    if message.content.startswith("!dc"):
-        # 入力された内容を受け取る
-        say = message.content 
-
-        # [!dc ]部分を消し、AdBのdで区切ってリスト化する
-        order = say.strip('!dc ')
-        cnt, mx = list(map(int, order.split('d'))) # さいころの個数と面数
-        dice = diceroll(cnt, mx) # 和を計算する関数(後述)
-        await message.channel.send(dice[cnt])
-        del dice[cnt]
-        # さいころの目の総和の内訳を表示する
-        await message.channel.send(dice)
      
     url_re = r"https://discordapp.com/channels/(\d{18})/(\d{18})/(\d{18})"
     url_list  = re.findall(url_re,message.content)
@@ -175,6 +163,38 @@ async def on_message(message):
 
             if got_message is not None:
                 await message.channel.send(embed=open_message(got_message))
+
+    if message.author.bot:  # ボットを弾く。
+        return
+
+    if message.content.startswith("!dc"):
+        # 入力された内容を受け取る
+        say = message.content 
+
+        # [!dc ]部分を消し、AdBのdで区切ってリスト化する
+        order = say.strip('!dc ')
+        cnt, mx = list(map(int, order.split('d'))) # さいころの個数と面数
+        dice = diceroll(cnt, mx) # 和を計算する関数(後述)
+        await message.channel.send(dice[cnt])
+        del dice[cnt]
+        # さいころの目の総和の内訳を表示する
+        await message.channel.send(dice)
+
+    if message.content == 'nrestart': 
+        if message.author.id == great_owner_id:
+            await message.channel.send('再起動します')
+            await client.change_presence(status=discord.Status.dnd,activity=discord.Game(name='インスニウム'))
+            await asyncio.sleep(0.5)
+            await client.logout()  
+            os.execv(sys.executable,[sys.executable, os.path.join(sys.path[0], __file__)] + sys.argv[1:])  
+        if not message.author.id == great_owner_id:
+            await message.channel.send('貴方にこのコマンドの使用権限はありません')   
+
+    if message.content == 'nclear': 
+        if message.author.id == great_owner_id:
+            await message.channel.purge()  
+        if not message.author.id == great_owner_id:
+            await message.channel.send('貴方にこのコマンドの使用権限はありません')   
 
 def open_message(message):
     """
