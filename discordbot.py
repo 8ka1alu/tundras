@@ -167,12 +167,12 @@ async def on_message(message):
     if message.author.bot:  # ボットを弾く。
         return
 
-    if message.content.startswith("!dc"):
+    if message.content.startswith("idc"):
         # 入力された内容を受け取る
         say = message.content 
 
         # [!dc ]部分を消し、AdBのdで区切ってリスト化する
-        order = say.strip('!dc ')
+        order = say.strip('idc ')
         cnt, mx = list(map(int, order.split('d'))) # さいころの個数と面数
         dice = diceroll(cnt, mx) # 和を計算する関数(後述)
         await message.channel.send(dice[cnt])
@@ -180,7 +180,7 @@ async def on_message(message):
         # さいころの目の総和の内訳を表示する
         await message.channel.send(dice)
 
-    if message.content == 'nrestart': 
+    if message.content == 'i)restart': 
         if message.author.id == great_owner_id:
             await message.channel.send('再起動します')
             await client.change_presence(status=discord.Status.dnd,activity=discord.Game(name='インスニウム'))
@@ -190,7 +190,7 @@ async def on_message(message):
         if not message.author.id == great_owner_id:
             await message.channel.send('貴方にこのコマンドの使用権限はありません')   
 
-    if message.content == 'nclear': 
+    if message.content == 'i)clear': 
         if message.author.id == great_owner_id:
             await message.channel.purge()  
         if not message.author.id == great_owner_id:
