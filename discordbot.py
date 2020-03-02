@@ -17,7 +17,7 @@ TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
 JST = timezone(timedelta(hours=+9), 'JST')
 
-onch_id = 654276619288051723 #Bot起動ログチャンネルのID
+onch_id = 683613604645175311 #Bot起動ログチャンネルのID
 logch_id = 654239524016357380 #参加退出ログチャンネルのID
 
 @client.event
@@ -28,6 +28,7 @@ async def on_ready():
         color = discord.Color.green()
     )
     embed.timestamp = datetime.now(JST)    
+    await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='インスニウム'))
 
 
 @client.event
