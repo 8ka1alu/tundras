@@ -167,7 +167,7 @@ async def on_message(message):
     if message.author.bot:  # ボットを弾く。
         return
 
-    if message.content.startswith("idc"):
+    if message.content.startswith("i)dc"):
         # 入力された内容を受け取る
         say = message.content 
 
