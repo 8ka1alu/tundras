@@ -67,6 +67,8 @@ async def on_member_join(member):
     
 @client.event
 async def on_member_remove(member):
+    guild = member.guild 
+    member_count = sum(1 for member in guild.members if not member.bot)
     logch = client.get_channel(logch_id)
     msg = [
         f"森へおかえり、{member.mention}",
