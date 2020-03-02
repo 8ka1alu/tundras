@@ -30,6 +30,7 @@ async def on_ready():
         color = discord.Color.green()
     )
     embed.timestamp = datetime.now(JST)
+    await client.get_channel(onch_id).send(embed=embed)
     print(client.user.name)  # ボットの名前
     print(client.user.id)  # ボットのID
     print(discord.__version__)  # discord.pyのバージョン
