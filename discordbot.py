@@ -27,7 +27,12 @@ async def on_ready():
         description = "起動しました",
         color = discord.Color.green()
     )
-    embed.timestamp = datetime.now(JST)    
+    embed.timestamp = datetime.now(JST)
+    print(client.user.name)  # ボットの名前
+    print(client.user.id)  # ボットのID
+    print(discord.__version__)  # discord.pyのバージョン
+    print('----------------')
+    print('インスニウム起動')    
     await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='インスニウム'))
 
 
