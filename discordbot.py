@@ -24,7 +24,7 @@ great_owner_id = 459936557432963103
 
 @client.event
 async def on_ready():
-    guild = member.guild 
+    guild = client.guilds 
     member_count = sum(1 for member in guild.members if not member.bot)
     bot_count = sum(1 for member in guild.members if member.bot) 
     embed = discord.Embed(
