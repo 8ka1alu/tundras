@@ -1,44 +1,144 @@
-import discord 
-import os
-import asyncio
 import re
+import sys
+import discord
 import random
+import asyncio
+import time
+import json
+import os
+import traceback
+import math
+from discord.ext import tasks
+from datetime import datetime, timedelta, timezone
 
-#トークン
-TOKEN = os.environ['DISCORD_BOT_TOKEN']
-
-#サーバー・チャンネルID
-sayas = 654239524016357377
-saya_wc = 654239524016357380
-tests = 683613604645175308
-test_wc = 683613604645175311
-
-# 接続に必要なオブジェクトを生成
 client = discord.Client()
 
-#起動メッセージ
+TOKEN = os.environ['DISCORD_BOT_TOKEN']
+
+JST = timezone(timedelta(hours=+9), 'JST')
+
+onch_id = 654276619288051723 #Bot起動ログチャンネルのID
+logch_id = 654239524016357380 #参加退出ログチャンネルのID
+
 @client.event
 async def on_ready():
-    print(client.user.name)  # ボットの名前
-    print(client.user.id)  # ボットのID
-    print(discord.__version__)  # discord.pyのバージョン
-    print('----------------')
-    print('Hello World,インスニウム、起動しました')
-    await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='インスニウム'))#状態をidle　投票受付をプレイ中
+    embed = discord.Embed(
+        title = "起動ログ",
+        description = "起動しました",
+        color = discord.Color.green()
+    )
+    embed.timestamp = datetime.now(JST)    
+
 
 @client.event
 async def on_member_join(member):
-    members = []
-    guild = client.guilds 
-    member_count = sum(1 for member in guild.members if not member.bot)
-    bot_count = sum(1 for member in guild.members if member.bot) 
-    if member.guild.id == sayas:
-        await client.get_channel(saya_wc).send(f"<@{member.id}>さんいらっしゃい！")
-    elif member.guild.id == tests:
-        await client.get_channel(test_wc).send(f"<@{member.id}>さんいらっしゃい！\n貴方は{member_count}人目")
+    logch = client.get_channel(logch_id)
+    msg = [
+        f"鳥だ！飛行機だ！いや{member.mention}",
+        f"綺麗な月と{member.mention}ですね……",
+        f"まぶしい朝には{member.mention}を一杯！うまい！",
+        f"{member.mention}がご降臨なさった！崇め敬え奉れ！",
+        f"にげろ！{member.mention}だ！",
+        f"{member.mention}生きとったんかワレ！",
+        f"うるせえ{member.mention}なげるぞ！",
+        f"あ！{member.mention}だ！",
+        f"予期されていたかのように{member.mention}が現れた……",
+        f"野生の{member.mention}が現れた！",
+        f"綺麗な夕日と{member.mention}に乾杯"
+    ]
+    embed = discord.Embed(
+        title = "ようこそ！",
+        description = random.choice(msg) + f"\n現在のメンバーは**{len(guild.members)}**人です。",
+        color = discord.Color.green()
+    )
+    embed.timestamp = datetime.now(JST)  
+    
+@client.event
+async def on_member_remove(member):
+    logch = client.get_channel(logch_id)
+    msg = [
+        f"森へおかえり、{member.mention}",
+        f"僕は全てを失った。金も、名誉も、{member.mention}も",
+        f"だれだゴミ箱に{member.mention}を入れたのは",
+        f"ねえマミー、僕の{member.mention}はどこー？",
+        f"さようならっ{member.mention}！",
+        f"{member.mention}\nあいつは良い奴だったよ",
+        f"{member.mention}は星になったのさ"
+    ]
+    embed = discord.Embed(
+        title = "さようなら(´;ω;｀)！",
+        description = (
+            random.choice(msg) + 
+            f"\n現在のメンバーは**{len(guild.members)}**人です。"
+        ),
+        color = discord.Color.green()
+    )
+    embed.timestamp = datetime.now(JST)  
 
 @client.event
 async def on_message(message):
+    if message.conent = ("i)sinfo"):
+        guild = message.guild
+        role = next(c for c in guild.roles if c.name == '@everyone')
+        t_locked = 0
+        v_locked = 0
+        online = 0
+        offline = 0
+        idle = 0
+        dnd = 0
+        pin = 0
+        if guild.mfa_level == 0:
+            mfamsg = "メンバーに2要素認証を必要としていません"
+        else:
+            mfamsg = "メンバーに2要素認証を必要としています"
+        if guild.premium_subscription_count == None:
+            pmmc = "0"
+        else:
+            pmmc = guild.premium_subscription_count
+        for member in guild.members:
+            if member.status == discord.Status.online:
+                online += 1
+            if member.status == discord.Status.offline:
+                offline += 1
+            if member.status == discord.Status.idle:
+                idle += 1
+            if member.status == discord.Status.dnd:
+                dnd += 1
+        for channel in guild.text_channels:
+            if channel.overwrites_for(role).read_messages is False:
+                t_locked += 1
+        for channel in guild.voice_channels:
+            if channel.overwrites_for(role).connect is False:
+                v_locked += 1
+        total = online + offline + idle + dnd
+        if total > 499:
+            large = "大"
+        elif total > 249:
+            large = "中"
+        else:
+            large = "小"
+        embed = discord.Embed(title=f"サーバー情報", color=0x2ECC69)
+        embed.set_thumbnail(url=guild.icon_url)
+        embed.add_field(name="‣サーバー名", value=f"**{guild.name}**", inline=False)
+        embed.add_field(name="‣サーバーの説明", value=f"**{guild.description}**", inline=False)
+        embed.add_field(name="‣サーバーID", value=f"**{guild.id}**")
+
+        embed.add_field(name="‣サーバーの大きさ", value=f"**{large}**")
+        embed.add_field(name="‣サーバー地域", value=f"**{guild.region}**")
+        embed.add_field(name="‣サーバーの旗", value=f"**{guild.banner}**")
+        embed.add_field(name="‣オーナー", value=f"||**{guild.owner.mention}**||", inline=False)
+        embed.add_field(name="‣チャンネル数",
+                        value=f"総合チャンネル数　:**{len(guild.text_channels) + len(guild.voice_channels)}個**(🔒×**{t_locked + v_locked}**)\nテキストチャンネル:**{len(guild.text_channels)}個**(🔒×**{t_locked}**)\nボイスチャンネル　:**{len(guild.voice_channels)}個**(🔒×**{v_locked}**)")
+        embed.add_field(name="‣カテゴリー数", value=f"**全て:{len(guild.categories)}**")
+        embed.add_field(name="‣役職数", value=f"**{len(guild.roles)}職**", inline=False)
+        embed.add_field(name="‣メンバー数",
+                        value=f"総メンバー:**{total}人**\nオンライン:**{online}人**\nオフライン:**{offline}人**\n退席中　　:**{idle}人**\n取り込み中:**{dnd}人**",
+                        inline=False)
+        embed.add_field(name="‣サーバーのブースト状態",
+                        value=f"サーバーブーストレベル　:**Lv.{guild.premium_tier}**\nサーバーブーストユーザー:**{pmmc}人**", inline=False)
+        embed.add_field(name="‣二段階認証", value=f"**{mfamsg}**", inline=False)
+        embed.set_footer(text = datetime.now(JST))
+        await message.channel.send(embed=embed)
 
     url_re = r"https://discordapp.com/channels/(\d{18})/(\d{18})/(\d{18})"
     url_list  = re.findall(url_re,message.content)
@@ -73,4 +173,3 @@ def open_message(message):
     return embed
 
 client.run(TOKEN)
-#
