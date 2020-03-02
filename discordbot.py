@@ -10,6 +10,7 @@ import traceback
 import math
 from discord.ext import tasks
 from datetime import datetime, timedelta, timezone
+from func import diceroll
 
 client = discord.Client()
 
@@ -149,6 +150,19 @@ async def on_message(message):
         embed.set_footer(text = datetime.now(JST))
         await message.channel.send(embed=embed)
 
+    if message.content.startswith("!dc"):
+        # 入力された内容を受け取る
+        say = message.content 
+
+        # [!dc ]部分を消し、AdBのdで区切ってリスト化する
+        order = say.strip('!dc ')
+        cnt, mx = list(map(int, order.split('d'))) # さいころの個数と面数
+        dice = diceroll(cnt, mx) # 和を計算する関数(後述)
+        await message.channel.send(dice[cnt])
+        del dice[cnt]
+        # さいころの目の総和の内訳を表示する
+        await message.channel.send(dice)
+     
     url_re = r"https://discordapp.com/channels/(\d{18})/(\d{18})/(\d{18})"
     url_list  = re.findall(url_re,message.content)
     
