@@ -36,7 +36,7 @@ async def on_ready():
     print(discord.__version__)  # discord.pyのバージョン
     print('----------------')
     print('インスニウム起動')    
-    await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='インスニウム'))
+    await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='集計活動'))
 
 
 @client.event
