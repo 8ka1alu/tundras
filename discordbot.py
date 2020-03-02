@@ -83,7 +83,7 @@ async def on_member_remove(member):
         title = "さようなら(´;ω;｀)！",
         description = (
             random.choice(msg) + 
-            f"現在のメンバーは**{str(member_count)}**人です。"
+            f"\n現在のメンバーは**{str(member_count)}**人です。"
         ),
         color = random.choice((0,0x1abc9c,0x11806a,0x2ecc71,0x1f8b4c,0x3498db,0x206694,0x9b59b6,0x71368a,0xe91e63,0xad1457,0xf1c40f,0xc27c0e,0xe67e22,0x95a5a6,0x607d8b,0x979c9f,0x546e7a,0x7289da,0x99aab5))
     )
