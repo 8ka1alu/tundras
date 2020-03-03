@@ -21,6 +21,7 @@ JST = timezone(timedelta(hours=+9), 'JST')
 onch_id = 683876343544414241 #Bot起動ログチャンネルのID
 logch_id = 654239524016357380 #参加退出ログチャンネルのID
 great_owner_id = 459936557432963103
+saver_owner_id = 622408697574064141 or 653110611437289472
 
 @client.event
 async def on_ready():
@@ -198,11 +199,12 @@ async def on_message(message):
             await message.channel.send('貴方にこのコマンドの使用権限はありません')   
 
     if message.content == 'iclear': 
-        if message.author.id == great_owner_id:
+        if message.author.id == great_owner_id or message.author.id == saver_owner_id:
             await message.channel.purge()  
             await message.channel.send("ログを削除しました")
         if not message.author.id == great_owner_id:
-            await message.channel.send('貴方にこのコマンドの使用権限はありません')   
+            if not message.author.id == saver_owner_id:
+                await message.channel.send('貴方にこのコマンドの使用権限はありません')   
 
 def open_message(message):
     """
