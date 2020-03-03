@@ -229,7 +229,11 @@ async def on_message(message):
             await message.channel.send('おやすみなさい！オーナーさん！今日も一日お疲れさまでした！') 
         else:
             await message.channel.send(f"{message.author.mention} さん。おやすみなさい。") 
+
     if message.content == "iset": #から始まるメッセージ
+        guild = message.guild 
+        member_count = sum(1 for member in guild.members if not member.bot)
+        bot_count = sum(1 for member in guild.members if member.bot)
         #指定したチャンネルとメッセージを送ったチャンネルが同じIDなら実行
         if message.author.id == great_owner_id:
             await client.get_channel(member_count_ch).edit(name=f"人数：{str(member_count)}")
