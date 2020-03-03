@@ -37,7 +37,7 @@ async def on_ready():
     print(client.user.id)  # ボットのID
     print(discord.__version__)  # discord.pyのバージョン
     print('----------------')
-    print('インスニウム起動')    
+    print('ノア起動')    
     await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='発言数：0'))
 
 @client.event
@@ -95,7 +95,7 @@ async def on_member_remove(member):
     
 @client.event
 async def on_message(message):
-    if message.content == ("i)sinfo"):
+    if message.content == ("nsinfo"):
         guild = message.guild
         role = next(c for c in guild.roles if c.name == '@everyone')
         t_locked = 0
@@ -174,7 +174,7 @@ async def on_message(message):
     if message.author.bot:  # ボットを弾く。
         return
 
-    if message.content.startswith("idc"):
+    if message.content.startswith("ndc"):
         # 入力された内容を受け取る
         say = message.content 
 
@@ -188,7 +188,7 @@ async def on_message(message):
         # さいころの目の総和の内訳を表示する
         await message.channel.send(dice)
 
-    if message.content == 'irestart': 
+    if message.content == 'nrestart': 
         if message.author.id == great_owner_id:
             await message.channel.send('5秒後に再起動します')
             await client.change_presence(status=discord.Status.do_not_disturb,activity=discord.Game(name='再起動待機'))
@@ -198,7 +198,7 @@ async def on_message(message):
         if not message.author.id == great_owner_id:
             await message.channel.send('貴方にこのコマンドの使用権限はありません')   
 
-    if message.content == 'iclear': 
+    if message.content == 'nclear': 
         if message.author.id == great_owner_id or message.author.id == saver_owner_id:
             await message.channel.purge()  
             await message.channel.send("ログを削除しました")
