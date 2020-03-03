@@ -225,6 +225,8 @@ async def on_message(message):
             await message.channel.send(f"{message.author.mention} さん。おやすみなさい。") 
  
     global msg_count
+    if message.guild.id == 628566224460185630
+        return
     if not message.author.bot:
         msg_count += 1
         await client.change_presence(status=discord.Status.idle,activity=discord.Game(name=f'発言数：{msg_count}'))
