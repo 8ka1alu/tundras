@@ -206,6 +206,24 @@ async def on_message(message):
             if not message.author.id == saver_owner_id:
                 await message.channel.send('貴方にこのコマンドの使用権限はありません')   
 
+    if 'おは' in message.content: #から始まるメッセージ
+        #指定したチャンネルとメッセージを送ったチャンネルが同じIDなら実行
+        if message.author.id == master_owner_id:
+            await message.channel.send('おはようございます！開発者様！今日も一日頑張って下さい！')
+        elif message.author.id == saver_owner_id:
+            await message.channel.send('おはようございます！オーナーさん！今日も一日頑張って下さい！') 
+        else:
+            await message.channel.send(f"{message.author.mention} さん。おはようございます。") 
+
+    if 'おは' in message.content: #から始まるメッセージ
+        #指定したチャンネルとメッセージを送ったチャンネルが同じIDなら実行
+        if message.author.id == master_owner_id:
+            await message.channel.send('おやすみなさい！開発者様！今日も一日お疲れさまでした！') 
+        elif message.author.id == saver_owner_id:
+            await message.channel.send('おやすみなさい！オーナーさん！今日も一日お疲れさまでした！') 
+        else:
+            await message.channel.send(f"{message.author.mention} さん。おやすみなさい。") 
+
 def open_message(message):
     """
     メッセージを展開し、作成した埋め込みに各情報を添付し返す関数
