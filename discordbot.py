@@ -200,6 +200,7 @@ async def on_message(message):
     if message.content == 'iclear': 
         if message.author.id == great_owner_id:
             await message.channel.purge()  
+            await message.channel.send("ログを削除しました")
         if not message.author.id == great_owner_id:
             await message.channel.send('貴方にこのコマンドの使用権限はありません')   
 
