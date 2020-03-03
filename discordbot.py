@@ -214,16 +214,16 @@ async def on_message(message):
 
     if 'おは' in message.content: #から始まるメッセージ
         #指定したチャンネルとメッセージを送ったチャンネルが同じIDなら実行
-        if message.author.id == master_owner_id:
+        if message.author.id == great_owner_id:
             await message.channel.send('おはようございます！開発者様！今日も一日頑張って下さい！')
         elif message.author.id == saver_owner_id:
             await message.channel.send('おはようございます！オーナーさん！今日も一日頑張って下さい！') 
         else:
             await message.channel.send(f"{message.author.mention} さん。おはようございます。") 
 
-    if 'おは' in message.content: #から始まるメッセージ
+    if 'おやす' in message.content: #から始まるメッセージ
         #指定したチャンネルとメッセージを送ったチャンネルが同じIDなら実行
-        if message.author.id == master_owner_id:
+        if message.author.id == great_owner_id:
             await message.channel.send('おやすみなさい！開発者様！今日も一日お疲れさまでした！') 
         elif message.author.id == saver_owner_id:
             await message.channel.send('おやすみなさい！オーナーさん！今日も一日お疲れさまでした！') 
@@ -231,7 +231,7 @@ async def on_message(message):
             await message.channel.send(f"{message.author.mention} さん。おやすみなさい。") 
     if message.content == "iset": #から始まるメッセージ
         #指定したチャンネルとメッセージを送ったチャンネルが同じIDなら実行
-        if message.author.id == master_owner_id:
+        if message.author.id == great_owner_id:
             await client.get_channel(member_count_ch).edit(name=f"人数：{str(member_count)}")
             await client.get_channel(bot_count_ch).edit(name=f"Bot数：{str(bot_count)}")
     
