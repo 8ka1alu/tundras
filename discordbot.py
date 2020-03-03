@@ -22,8 +22,8 @@ onch_id = 683876343544414241 #Bot起動ログチャンネルのID
 logch_id = 654239524016357380 #参加退出ログチャンネルのID
 great_owner_id = 459936557432963103
 saver_owner_id = 622408697574064141 or 653110611437289472
-member_count_ch = 684322135082008577
-bot_count_ch = 684323475900727351
+member_count_ch = 684327783236894788
+bot_count_ch = 684327809740701720
 
 @client.event
 async def on_ready():
