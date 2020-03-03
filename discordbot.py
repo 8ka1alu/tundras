@@ -229,28 +229,26 @@ async def on_message(message):
         await client.change_presence(status=discord.Status.idle,activity=discord.Game(name=f'発言数：{msg_count}'))
     
     GLOBAL_CH_NAME = "破壊工房" # グローバルチャットのチャンネル名
+    GLOBAL_WEBHOOK_NAME = "hakai-webhook" # グローバルチャットのWebhook名
 
     if message.channel.name == GLOBAL_CH_NAME:
         # hoge-globalの名前をもつチャンネルに投稿されたので、メッセージを転送する
-
-        await message.delete() # 元のメッセージは削除しておく
+        await message.delete()
 
         channels = client.get_all_channels()
         global_channels = [ch for ch in channels if ch.name == GLOBAL_CH_NAME]
-        # channelsはbotの取得できるチャンネルのイテレーター
-        # global_channelsは 破壊工房 の名前を持つチャンネルのリスト
-
-        embed = discord.Embed(title="ぐろーばるちゃっと",
-            description=message.content, color = random.choice((0,0x1abc9c,0x11806a,0x2ecc71,0x1f8b4c,0x3498db,0x206694,0x9b59b6,0x71368a,0xe91e63,0xad1457,0xf1c40f,0xc27c0e,0xe67e22,0x95a5a6,0x607d8b,0x979c9f,0x546e7a,0x7289da,0x99aab5)))
-        embed.set_author(name=message.author.display_name, 
-            icon_url=message.author.avatar_url_as(format="png"))
-        embed.set_footer(text=f"{message.guild.name} / {message.channel.name}",
-            icon_url=message.guild.icon_url_as(format="png"))
-        # Embedインスタンスを生成、投稿者、投稿場所などの設定
 
         for channel in global_channels:
-            # メッセージを埋め込み形式で転送
-            await channel.send(embed=embed)
+            ch_webhooks = await channel.webhooks()
+            webhook = discord.utils.get(ch_webhooks, name=GLOBAL_WEBHOOK_NAME)
+
+            if webhook is None:
+                await message.channel.webhook_create(name=GLOBAL_WEBHOOK_NAME)
+                await message.channel.send("Webhookを作成しました。\nもう一度発言お願いします。")
+                return
+            await webhook.send(content=message.content,
+                username=message.author.name,
+                avatar_url=message.author.avatar_url_as(format="png"))
 
 def open_message(message):
     """
