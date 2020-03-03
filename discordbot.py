@@ -225,7 +225,7 @@ async def on_message(message):
             await message.channel.send(f"{message.author.mention} さん。おやすみなさい。") 
  
     global msg_count
-    if member.guild.id == 628566224460185630
+    if member.guild.id == 628566224460185630:
         return
     if not message.author.bot:
         msg_count += 1
