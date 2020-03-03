@@ -238,6 +238,7 @@ async def on_message(message):
         if message.author.id == great_owner_id:
             await client.get_channel(member_count_ch).edit(name=f"User数：{str(member_count)}")
             await client.get_channel(bot_count_ch).edit(name=f"Bot数：{str(bot_count)}")
+            await message.delete()
     
 def open_message(message):
     """
