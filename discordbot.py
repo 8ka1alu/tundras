@@ -42,7 +42,8 @@ async def on_ready():
     print('----------------')
     print('インスニウム起動')    
     await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='集計活動'))
-
+    await client.get_channel(msg_count_ch).edit(name=f"発言数：0")
+        
 
 @client.event
 async def on_member_join(member):
