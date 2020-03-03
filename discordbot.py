@@ -18,13 +18,10 @@ TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
 JST = timezone(timedelta(hours=+9), 'JST')
 
-onch_id = 683876343544414241 #Bot起動ログチャンネルのID
-logch_id = 654239524016357380 #参加退出ログチャンネルのID
+onch_id = 673229098180411395 #Bot起動ログチャンネルのID
+logch_id = 673412099350855702 #参加退出ログチャンネルのID
 great_owner_id = 459936557432963103
-saver_owner_id = 622408697574064141 or 653110611437289472
-member_count_ch = 684327783236894788
-bot_count_ch = 684327809740701720
-msg_count_ch = 684331907508731915
+saver_owner_id = 682541929220800512
 msg_count = 0
 
 @client.event
@@ -41,9 +38,7 @@ async def on_ready():
     print(discord.__version__)  # discord.pyのバージョン
     print('----------------')
     print('インスニウム起動')    
-    await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='集計活動'))
-    await client.get_channel(msg_count_ch).edit(name=f"発言数：0")
-        
+    await client.change_presence(status=discord.Status.idle,activity=discord.Game(name='発言数：0'))
 
 @client.event
 async def on_member_join(member):
@@ -71,8 +66,6 @@ async def on_member_join(member):
     )
     embed.timestamp = datetime.now(JST) 
     await logch.send(embed=embed) 
-    await client.get_channel(member_count_ch).edit(name=f"User数：{str(member_count)}")
-    await client.get_channel(bot_count_ch).edit(name=f"Bot数：{str(bot_count)}")
     
 @client.event
 async def on_member_remove(member):
@@ -99,9 +92,7 @@ async def on_member_remove(member):
     )
     embed.timestamp = datetime.now(JST)  
     await logch.send(embed=embed) 
-    await client.get_channel(member_count_ch).edit(name=f"User数：{str(member_count)}")
-    await client.get_channel(bot_count_ch).edit(name=f"Bot数：{str(bot_count)}")
-
+    
 @client.event
 async def on_message(message):
     if message.content == ("i)sinfo"):
@@ -232,23 +223,12 @@ async def on_message(message):
             await message.channel.send('おやすみなさい！オーナーさん！今日も一日お疲れさまでした！') 
         else:
             await message.channel.send(f"{message.author.mention} さん。おやすみなさい。") 
-
-    if message.content == "iset": #から始まるメッセージ
-        guild = message.guild 
-        member_count = sum(1 for member in guild.members if not member.bot)
-        bot_count = sum(1 for member in guild.members if member.bot)
-        #指定したチャンネルとメッセージを送ったチャンネルが同じIDなら実行
-        if message.author.id == great_owner_id:
-            await client.get_channel(member_count_ch).edit(name=f"User数：{str(member_count)}")
-            await client.get_channel(bot_count_ch).edit(name=f"Bot数：{str(bot_count)}")
-            await message.delete()
  
     global msg_count
     if not message.author.bot:
         msg_count += 1
-        await client.get_channel(msg_count_ch).edit(name=f"発言数：{str(msg_count)}")
-           
-   
+        await client.change_presence(status=discord.Status.idle,activity=discord.Game(name=f'発言数：{msg_count}'))
+
 def open_message(message):
     """
     メッセージを展開し、作成した埋め込みに各情報を添付し返す関数
