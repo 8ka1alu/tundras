@@ -92,6 +92,47 @@ async def on_member_remove(member):
     
 @client.event
 async def on_message(message):
+    if message.author.bot:  # ボットを弾く。
+        return
+
+    GLOBAL_CH_NAME = "破壊工房" # グローバルチャットのチャンネル名
+    GLOBAL_WEBHOOK_NAME = "hakai-webhook" # グローバルチャットのWebhook名
+
+    if message.channel.name == GLOBAL_CH_NAME:
+        # hoge-globalの名前をもつチャンネルに投稿されたので、メッセージを転送する
+        await message.delete()
+
+        channels = client.get_all_channels()
+        global_channels = [ch for ch in channels if ch.name == GLOBAL_CH_NAME]
+
+        for channel in global_channels:
+            ch_webhooks = await channel.webhooks()
+            webhook = discord.utils.get(ch_webhooks, name=GLOBAL_WEBHOOK_NAME)
+
+            if webhook is None:
+                await message.channel.create_webhook(name=GLOBAL_WEBHOOK_NAME)
+                continue
+
+            await webhook.send(content=message.content,
+                username=message.author.name,
+                avatar_url=message.author.avatar_url_as(format="png"))
+
+    url_re = r"https://discordapp.com/channels/(\d{18})/(\d{18})/(\d{18})"
+    url_list  = re.findall(url_re,message.content)
+    
+    for url in url_list:
+        guild_id,channel_id,message_id = url
+        channel = client.get_channel(int(channel_id))
+
+        if channel is not None:
+            got_message = await channel.fetch_message(message_id)
+
+            if got_message is not None:
+                await message.channel.send(embed=open_message(got_message))
+
+    if message.channel.name == GLOBAL_CH_NAME:
+        return
+
     if message.content == ("nsinfo"):
         guild = message.guild
         role = next(c for c in guild.roles if c.name == '@everyone')
@@ -155,22 +196,6 @@ async def on_message(message):
         embed.set_footer(text = datetime.now(JST))
         await message.channel.send(embed=embed)
      
-    url_re = r"https://discordapp.com/channels/(\d{18})/(\d{18})/(\d{18})"
-    url_list  = re.findall(url_re,message.content)
-    
-    for url in url_list:
-        guild_id,channel_id,message_id = url
-        channel = client.get_channel(int(channel_id))
-
-        if channel is not None:
-            got_message = await channel.fetch_message(message_id)
-
-            if got_message is not None:
-                await message.channel.send(embed=open_message(got_message))
-
-    if message.author.bot:  # ボットを弾く。
-        return
-
     if message.content.startswith("ndc"):
         # 入力された内容を受け取る
         say = message.content 
@@ -220,29 +245,6 @@ async def on_message(message):
             await message.channel.send('おやすみなさい！オーナーさん！今日も一日お疲れさまでした！') 
         else:
             await message.channel.send(f"{message.author.mention} さん。おやすみなさい。") 
- 
-    GLOBAL_CH_NAME = "破壊工房" # グローバルチャットのチャンネル名
-    GLOBAL_WEBHOOK_NAME = "hakai-webhook" # グローバルチャットのWebhook名
-
-    if message.channel.name == GLOBAL_CH_NAME:
-        # hoge-globalの名前をもつチャンネルに投稿されたので、メッセージを転送する
-        await message.delete()
-
-        channels = client.get_all_channels()
-        global_channels = [ch for ch in channels if ch.name == GLOBAL_CH_NAME]
-
-        for channel in global_channels:
-            ch_webhooks = await channel.webhooks()
-            webhook = discord.utils.get(ch_webhooks, name=GLOBAL_WEBHOOK_NAME)
-
-            if webhook is None:
-                await message.channel.create_webhook(name=GLOBAL_WEBHOOK_NAME)
-                continue
-
-            await webhook.send(content=message.content,
-                username=message.author.name,
-                avatar_url=message.author.avatar_url_as(format="png"))
-
 
     global msg_count
     if message.guild.id == 628566224460185630:
