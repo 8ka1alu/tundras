@@ -221,13 +221,9 @@ async def on_message(message):
         else:
             await message.channel.send(f"{message.author.mention} さん。おやすみなさい。") 
  
-    global msg_count
-    if message.guild.id == 628566224460185630:
+    if message.author.bot:
         return
-    if not message.author.bot:
-        msg_count += 1
-        await client.change_presence(status=discord.Status.idle,activity=discord.Game(name=f'発言数：{msg_count}'))
-    
+
     GLOBAL_CH_NAME = "破壊工房" # グローバルチャットのチャンネル名
     GLOBAL_WEBHOOK_NAME = "hakai-webhook" # グローバルチャットのWebhook名
 
@@ -250,6 +246,14 @@ async def on_message(message):
                 username=message.author.name,
                 avatar_url=message.author.avatar_url_as(format="png"))
 
+
+    global msg_count
+    if message.guild.id == 628566224460185630:
+        return
+    if not message.author.bot:
+        msg_count += 1
+        await client.change_presence(status=discord.Status.idle,activity=discord.Game(name=f'発言数：{msg_count}'))
+    
 def open_message(message):
     """
     メッセージを展開し、作成した埋め込みに各情報を添付し返す関数
