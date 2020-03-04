@@ -237,7 +237,8 @@ async def on_message(message):
 
             if webhook is None:
                 await message.channel.webhook_create(name=GLOBAL_WEBHOOK_NAME)
-                
+                continue
+
             await webhook.send(content=message.content,
                 username=message.author.name,
                 avatar_url=message.author.avatar_url_as(format="png"))
