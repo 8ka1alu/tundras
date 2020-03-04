@@ -221,9 +221,6 @@ async def on_message(message):
         else:
             await message.channel.send(f"{message.author.mention} さん。おやすみなさい。") 
  
-    if message.author.bot:
-        return
-
     GLOBAL_CH_NAME = "破壊工房" # グローバルチャットのチャンネル名
     GLOBAL_WEBHOOK_NAME = "hakai-webhook" # グローバルチャットのWebhook名
 
@@ -239,7 +236,7 @@ async def on_message(message):
             webhook = discord.utils.get(ch_webhooks, name=GLOBAL_WEBHOOK_NAME)
 
             if webhook is None:
-                await client.webhook_create(name=GLOBAL_WEBHOOK_NAME)
+                await message.channel.webhook_create(name=GLOBAL_WEBHOOK_NAME)
                 await message.channel.send("Webhookを作成しました。\nもう一度発言お願いします。")
                 return
             await webhook.send(content=message.content,
