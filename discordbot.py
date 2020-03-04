@@ -236,7 +236,7 @@ async def on_message(message):
             webhook = discord.utils.get(ch_webhooks, name=GLOBAL_WEBHOOK_NAME)
 
             if webhook is None:
-                await message.channel.webhook_create(name=GLOBAL_WEBHOOK_NAME)
+                await create_webhook(name=GLOBAL_WEBHOOK_NAME)
                 continue
 
             await webhook.send(content=message.content,
