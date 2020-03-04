@@ -237,8 +237,7 @@ async def on_message(message):
 
             if webhook is None:
                 await message.channel.webhook_create(name=GLOBAL_WEBHOOK_NAME)
-                await message.channel.send("Webhookを作成しました。\nもう一度発言お願いします。")
-                return
+                
             await webhook.send(content=message.content,
                 username=message.author.name,
                 avatar_url=message.author.avatar_url_as(format="png"))
