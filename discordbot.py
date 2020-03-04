@@ -176,7 +176,7 @@ async def on_message(message):
         say = message.content 
 
         # [idc ]部分を消し、AdBのdで区切ってリスト化する
-        order = say.strip('idc ')
+        order = say.strip('ndc ')
         cnt, mx = list(map(int, order.split('d'))) # さいころの個数と面数
         dice = diceroll(cnt, mx) # 和を計算する関数(後述)
         await message.channel.send(dice[cnt])
