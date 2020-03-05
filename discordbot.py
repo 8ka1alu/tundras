@@ -94,7 +94,7 @@ async def on_member_remove(member):
 async def on_message(message):
     if message.author.bot:  # ボットを弾く。
         return
-    if message.content == message.attachments[0]:
+    if '.png' in message.content:
         MSG = message.attachments[0].url
         await message.channel.send(MSG)
 
