@@ -94,9 +94,6 @@ async def on_member_remove(member):
 async def on_message(message):
     if message.author.bot:  # ボットを弾く。
         return
-    if '.png' in message.content:
-        MSG = message.attachments[0].url
-        await message.channel.send(MSG)
 
     GLOBAL_CH_NAME = "破壊工房" # グローバルチャットのチャンネル名
     GLOBAL_WEBHOOK_NAME = "hakai-webhook" # グローバルチャットのWebhook名
@@ -115,11 +112,12 @@ async def on_message(message):
             if webhook is None:
                 await message.channel.create_webhook(name=GLOBAL_WEBHOOK_NAME)
                 continue
-
-            await webhook.send(content=message.content,
-                username=message.author.name,
-                avatar_url=message.author.avatar_url_as(format="png"))
-
+           if message.attachments:
+                MSG = message.attachments[0].url
+                await webhook.send(content=message.content + MSG,  username=message.author.name, avatar_url=message.author.avatar_url_as(format="png"))
+           else:
+                await webhook.send(content=message.content,  username=message.author.name, avatar_url=message.author.avatar_url_as(format="png"))
+           
     url_re = r"https://discordapp.com/channels/(\d{18})/(\d{18})/(\d{18})"
     url_list  = re.findall(url_re,message.content)
     
