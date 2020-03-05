@@ -116,7 +116,8 @@ async def on_message(message):
                 MSG = message.attachments[0].url
                 embed = discord.Embed(title="画像送信",description=MSG,color = random.choice((0,0x1abc9c,0x11806a,0x2ecc71,0x1f8b4c,0x3498db,0x206694,0x9b59b6,0x71368a,0xe91e63,0xad1457,0xf1c40f,0xc27c0e,0xe67e22,0x95a5a6,0x607d8b,0x979c9f,0x546e7a,0x7289da,0x99aab5)))
                 embed.set_image(url=MSG)
-                await webhook.send(content=message.content + embed,  username=message.author.name, avatar_url=message.author.avatar_url_as(format="png"))
+                await webhook.send(content=message.content,  username=message.author.name, avatar_url=message.author.avatar_url_as(format="png"))
+                webhook.add_embed(embed)
             else:
                 await webhook.send(content=message.content,  username=message.author.name, avatar_url=message.author.avatar_url_as(format="png"))
            
