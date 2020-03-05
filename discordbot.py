@@ -275,4 +275,3 @@ def open_message(message):
 
 client.run(TOKEN)
 
-
