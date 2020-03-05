@@ -100,8 +100,6 @@ async def on_message(message):
 
     if message.channel.name == GLOBAL_CH_NAME:
         # hoge-globalの名前をもつチャンネルに投稿されたので、メッセージを転送する
-        await message.delete()
-
         channels = client.get_all_channels()
         global_channels = [ch for ch in channels if ch.name == GLOBAL_CH_NAME]
 
@@ -118,6 +116,7 @@ async def on_message(message):
                 embed.set_image(url=MSG)   
                 await webhook.send(content=message.content,  username=message.author.name, avatar_url=message.author.avatar_url_as(format="png"), embed=embed)
             else:
+                await message.delete()
                 await webhook.send(content=message.content,  username=message.author.name, avatar_url=message.author.avatar_url_as(format="png"))
             
     url_re = r"https://discordapp.com/channels/(\d{18})/(\d{18})/(\d{18})"
