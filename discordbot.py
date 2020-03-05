@@ -94,8 +94,9 @@ async def on_member_remove(member):
 async def on_message(message):
     if message.author.bot:  # ボットを弾く。
         return
-    MSG = message.attachments[0].url
-    await message.channel.send(MSG)
+    if message.content == message.attachments[0]:
+        MSG = message.attachments[0].url
+        await message.channel.send(MSG)
 
     GLOBAL_CH_NAME = "破壊工房" # グローバルチャットのチャンネル名
     GLOBAL_WEBHOOK_NAME = "hakai-webhook" # グローバルチャットのWebhook名
