@@ -114,8 +114,8 @@ async def on_message(message):
                 continue
             if message.attachments:
                 MSG = message.attachments[0].url
-                await webhook.send(content=message.content + MSG,  username=message.author.name, avatar_url=message.author.avatar_url_as(format="png"))
-           else:
+                await webhook.send(content=message.content + MSG,  username=message.author.name, avatar_url=message.author.avatar_url_as(format="png")
+            else:
                 await webhook.send(content=message.content,  username=message.author.name, avatar_url=message.author.avatar_url_as(format="png"))
            
     url_re = r"https://discordapp.com/channels/(\d{18})/(\d{18})/(\d{18})"
