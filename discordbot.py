@@ -117,7 +117,7 @@ async def on_message(message):
                 await webhook.send(content=message.content, embed=embed,  username=message.author.name, avatar_url=message.author.avatar_url_as(format="png"))
                 return
             else:
-                await message.delete()
+                #await message.delete()
                 await webhook.send(content=message.content,  username=message.author.name, avatar_url=message.author.avatar_url_as(format="png"))
                 return
                 
