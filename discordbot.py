@@ -92,9 +92,7 @@ async def on_member_remove(member):
     
 @client.event
 async def on_message(message):
-    if message.author.id == 302050872383242240:
-        await client.get_channel(685397715433291826).send(message.content)
-
+    
     if message.author.bot:  # ボットを弾く。
         return
 
